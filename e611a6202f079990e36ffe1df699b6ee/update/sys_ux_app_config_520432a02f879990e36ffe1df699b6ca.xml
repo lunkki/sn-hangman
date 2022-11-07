@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_app_config">
+    <sys_ux_app_config action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <custom_icon/>
+        <default_route_type/>
+        <description/>
+        <encode_query_string>false</encode_query_string>
+        <icon/>
+        <landing_path>home</landing_path>
+        <name>Hangman</name>
+        <prefetch_limits/>
+        <sys_class_name>sys_ux_app_config</sys_class_name>
+        <sys_created_by>lauri.alakulppi</sys_created_by>
+        <sys_created_on>2022-11-05 21:26:08</sys_created_on>
+        <sys_id>520432a02f879990e36ffe1df699b6ca</sys_id>
+        <sys_name>Hangman</sys_name>
+        <sys_package display_value="Hangman" source="x_110515_hangman">e611a6202f079990e36ffe1df699b6ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Hangman">e611a6202f079990e36ffe1df699b6ee</sys_scope>
+        <sys_update_name>sys_ux_app_config_520432a02f879990e36ffe1df699b6ca</sys_update_name>
+    </sys_ux_app_config>
+</record_update>

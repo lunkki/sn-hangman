@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="DELETE">
+        <includes/>
+        <macroponent display_value="Home default">572432a02f879990e36ffe1df699b656</macroponent>
+        <name>New client script 1</name>
+        <preset/>
+        <required_translations/>
+        <script><![CDATA[/**
+* @param {params} params
+* @param {api} params.api
+* @param {any} params.event
+* @param {any} params.imports
+* @param {ApiHelpers} params.helpers
+*/
+function handler({api, event, helpers, imports}) {
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>lauri.alakulppi</sys_created_by>
+        <sys_created_on>2022-11-05 21:37:24</sys_created_on>
+        <sys_id>1b96f6a42f879990e36ffe1df699b6b4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>New client script 1</sys_name>
+        <sys_package display_value="Hangman" source="x_110515_hangman">e611a6202f079990e36ffe1df699b6ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Hangman">e611a6202f079990e36ffe1df699b6ee</sys_scope>
+        <sys_update_name>sys_ux_client_script_1b96f6a42f879990e36ffe1df699b6b4</sys_update_name>
+        <sys_updated_by>lauri.alakulppi</sys_updated_by>
+        <sys_updated_on>2022-11-05 21:37:24</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Hangman">e611a6202f079990e36ffe1df699b6ee</application>
+        <file_path/>
+        <instance_id>18148416db831b04439ef70fbf9619be</instance_id>
+        <instance_name>dev63598</instance_name>
+        <name>sys_ux_client_script_1b96f6a42f879990e36ffe1df699b6b4</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_ux_client_script"&gt;&lt;sys_ux_client_script action="INSERT_OR_UPDATE"&gt;&lt;includes/&gt;&lt;macroponent display_value="Home default"&gt;572432a02f879990e36ffe1df699b656&lt;/macroponent&gt;&lt;name&gt;New client script 1&lt;/name&gt;&lt;preset/&gt;&lt;required_translations/&gt;&lt;script&gt;&lt;![CDATA[/**
+* @param {params} params
+* @param {api} params.api
+* @param {any} params.event
+* @param {any} params.imports
+* @param {ApiHelpers} params.helpers
+*/
+function handler({api, event, helpers, imports}) {
+}]]&gt;&lt;/script&gt;&lt;script_api_version&gt;2.0.0&lt;/script_api_version&gt;&lt;sys_class_name&gt;sys_ux_client_script&lt;/sys_class_name&gt;&lt;sys_created_by&gt;lauri.alakulppi&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-11-05 21:37:24&lt;/sys_created_on&gt;&lt;sys_id&gt;1b96f6a42f879990e36ffe1df699b6b4&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;New client script 1&lt;/sys_name&gt;&lt;sys_package display_value="Hangman" source="x_110515_hangman"&gt;e611a6202f079990e36ffe1df699b6ee&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Hangman"&gt;e611a6202f079990e36ffe1df699b6ee&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ux_client_script_1b96f6a42f879990e36ffe1df699b6b4&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;lauri.alakulppi&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-11-05 21:37:24&lt;/sys_updated_on&gt;&lt;target&gt;macroponent&lt;/target&gt;&lt;type&gt;default&lt;/type&gt;&lt;/sys_ux_client_script&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>1779088654</payload_hash>
+        <record_name>New client script 1</record_name>
+        <reverted_from/>
+        <source>7a11a6202f079990e36ffe1df699b6f0</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>lauri.alakulppi</sys_created_by>
+        <sys_created_on>2022-11-05 21:37:24</sys_created_on>
+        <sys_id>df963ea42f879990e36ffe1df699b66e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18449ba1db30000001</sys_recorded_at>
+        <sys_updated_by>lauri.alakulppi</sys_updated_by>
+        <sys_updated_on>2022-11-05 21:37:24</sys_updated_on>
+        <type>UX Client Script</type>
+        <update_guid>5b963ea47f8799909fc3ae670cdfa96e</update_guid>
+        <update_guid_history>5b963ea47f8799909fc3ae670cdfa96e:1779088654</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>lauri.alakulppi</sys_created_by>
+        <sys_created_on>2022-11-05 21:37:34</sys_created_on>
+        <sys_db_object display_value="" name="sys_ux_client_script">sys_ux_client_script</sys_db_object>
+        <sys_id>004b45bebea14fe880009155c358bfa1</sys_id>
+        <sys_metadata>1b96f6a42f879990e36ffe1df699b6b4</sys_metadata>
+        <sys_name>New client script 1</sys_name>
+        <sys_package display_value="Hangman" source="x_110515_hangman">e611a6202f079990e36ffe1df699b6ee</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Hangman">e611a6202f079990e36ffe1df699b6ee</sys_scope>
+        <sys_scope_delete display_value="">5bfc42e75f3448e0a9c3c33df3f3e400</sys_scope_delete>
+        <sys_update_name>sys_ux_client_script_1b96f6a42f879990e36ffe1df699b6b4</sys_update_name>
+        <sys_update_version display_value="sys_ux_client_script_1b96f6a42f879990e36ffe1df699b6b4">df963ea42f879990e36ffe1df699b66e</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container">
+    <sp_container action="INSERT_OR_UPDATE">
+        <background_color/>
+        <background_image/>
+        <background_style>default</background_style>
+        <bootstrap_alt>false</bootstrap_alt>
+        <class_name/>
+        <container_class_name/>
+        <name>Hangman game - Container 1</name>
+        <order>1</order>
+        <sp_page display_value="hm_game">2f3bbeac2f879990e36ffe1df699b615</sp_page>
+        <subheader>false</subheader>
+        <sys_class_name>sp_container</sys_class_name>
+        <sys_created_by>lauri.alakulppi</sys_created_by>
+        <sys_created_on>2022-11-05 21:57:38</sys_created_on>
+        <sys_id>633bbeac2f879990e36ffe1df699b618</sys_id>
+        <sys_name>Hangman game - Container 1</sys_name>
+        <sys_package display_value="Hangman" source="x_110515_hangman">e611a6202f079990e36ffe1df699b6ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Hangman">e611a6202f079990e36ffe1df699b6ee</sys_scope>
+        <sys_update_name>sp_container_633bbeac2f879990e36ffe1df699b618</sys_update_name>
+        <title/>
+        <width>container</width>
+    </sp_container>
+</record_update>

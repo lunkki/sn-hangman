@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function(spUtil, $scope,$timeout,$location) {
+	/* widget controller */
+	var c = this;
+
+	if(c.data.redirect) {
+		var srch = $location.search();
+		srch.id = "hm_game";
+		srch.sys_id = c.data.redirect_id;
+		$location.search(srch);
+
+	}
+
+
+	$scope.gamedata = {};
+	$scope.gamedata.changed = false;
+	spUtil.recordWatch($scope, "x_110515_hangman_game", "sys_id="+c.data.gameID, function(name, data) {
+		//console.log(data); //comes back as undefined  
+		//console.log(name);
+		$scope.gamedata.changedRecord = name.data; // name.data has the updated or inserted record info
+		c.server.update();
+		$timeout(function() {
+			$scope.changeBg();
+		}, 700);  
+	});
+
+	$scope.changeBg = function() {
+		$scope.gamedata.changed = true;
+		$timeout(function() {
+			$scope.gamedata.changed = false;
+		}, 700);
+
+	}
+	
+	c.quessChar = function(char) {
+				c.server.get({
+			method: "quessChar",
+			char: char
+		}).then(function(resp) {
+					c.server.update()
+		});
+	}
+	
+	c.newGame = function() {
+		var newsrch = $location.search();
+		newsrch.id = "hm_game";
+		newsrch.sys_id ="";
+		$location.search(newsrch);
+	}
+
+	
+};
+
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.main {
+  font-family: "Roboto" 
+    position:relative;
+}
+
+.word {
+  width: 100%;
+  font-size: 20px;
+  font-size: 6vw; 
+  text-align:center;
+  letter-spacing: 2px;
+}
+
+.row {
+  text-align:center;
+  padding:2px;
+}
+
+.game-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.newgame {
+  text-align:center;
+  position: sticky;
+}
+
+.charbutton {
+  width: 30px;
+  font-size:12px;
+}
+
+.win-image {
+  position: absolute;
+  width: 100%;
+  height:100%;
+  top: 1px;
+  left: 1px;
+}
+
+.result-title {
+ text-align:center;
+  font-size: 60px;
+}
+
+.win-title {
+   background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red,violet, indigo, blue, green, yellow, orange, red);   -webkit-background-clip: text;
+  color: transparent; 
+}
+
+
+.death-background {
+  position: absolute;
+  top: 200px;
+  left: 1px;
+    background: rgba(0,0,0,0.5);
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    opacity: 1;
+    animation: fade-in 10s linear;
+  * {
+    color: #ff0000;
+    font-family: OptimusPrinceps, sans-serif;
+    letter-spacing: 5px;
+    font-size: 8em;
+    font-weight: 400;
+    animation: fade-in 10s linear, text-zoom 5s linear;
+  }
+}
+
+
+@keyframes fade-in {
+    0% { opacity: 0; }
+    25% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+@keyframes text-zoom {
+    0% { font-size: 5em; }
+    25% { font-size: 6em; }
+    50% { font-size: 7em; }
+    75% { font-size: 8em; }
+    100% { font-size: 8em; }
+}
+
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>hangman-game</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>hangman-game</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+	const utils = new x_110515_hangman.HangmanUtils();
+	data.redirect = false;
+	data.gameID =	$sp.getParameter("sys_id");
+
+	//data.gameID = '62b9e5f42f4bd990e36ffe1df699b620' // TESTING
+	//data.gameID = 'faf966202f479990e36ffe1df699b6ac' // TESTING WIN
+	//data.gameID = '7f31bd342f8bd990e36ffe1df699b619' // TESTING LOST
+
+	if(!data.gameID) {
+		var newGameID = utils.newGame();
+		data.redirect = true;
+		data.redirect_id = newGameID;
+	}
+
+	if(input) {
+			if (input.method == "quessChar") {
+		utils.guessLetter(data.gameID,input.char);
+	}
+	}
+
+
+	if(data.gameID) {
+		const game = new GlideRecord('x_110515_hangman_game');
+		game.get(data.gameID);
+		data.gameNumber = game.getValue('number');
+		data.result = game.getValue('result');
+		data.wordTemplate = utils.getWordTemplate(data.gameID);
+		if(data.result == 'lose') {
+			data.wordTemplate = game.getValue('word');
+		}
+		data.usedCharacters = JSON.parse(game.getValue('used_characters'));
+		data.failedAttempts = parseInt(game.getValue('failed_attempts'));
+		
+		data.imageSRC = utils.getImageSource(data.gameID);
+		if(data.result == 'win') {
+			data.imageSRC = 'x_110515_hangman.hm_win.png';
+		}
+		
+		const row1 = ["q","w","e","r","t","y","u","i","o","p"];
+		const row2 = ["a","s","d","f","g","h","j","k","l"];
+		const row3 = ["z","x","c","v","b","n","m"];
+
+		
+		data.row1chars = getrowChars(row1,data.usedCharacters);
+		data.row2chars = getrowChars(row2,data.usedCharacters);
+		data.row3chars = getrowChars(row3,data.usedCharacters);
+
+	}
+
+
+
+
+
+})();
+
+
+function getrowChars(chars,usedCharacters) {
+	let charList = [];
+	for (let index = 0; index < chars.length; index++) {
+		var obj = {};
+		const character = chars[index];
+		obj.char = character;
+		
+		if(usedCharacters.indexOf(character) > -1) {
+			obj.used = true;
+		} else
+			obj.used = false;
+			charList.push(obj);
+	}
+	return charList;
+
+}]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>lauri.alakulppi</sys_created_by>
+        <sys_created_on>2022-11-05 21:57:37</sys_created_on>
+        <sys_id>e73bbeac2f879990e36ffe1df699b612</sys_id>
+        <sys_name>hangman-game</sys_name>
+        <sys_package display_value="Hangman" source="x_110515_hangman">e611a6202f079990e36ffe1df699b6ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Hangman">e611a6202f079990e36ffe1df699b6ee</sys_scope>
+        <sys_update_name>sp_widget_e73bbeac2f879990e36ffe1df699b612</sys_update_name>
+        <template><![CDATA[
+<div class="main">
+  <h1 class="win-title result-title" ng-if="c.data.result=='win'">
+    YOU LIVED!
+  </h1>
+
+
+
+
+  <div class="word">
+    {{c.data.wordTemplate }}
+
+  </div>
+
+  <img class="game-image" src="{{c.data.imageSRC}}" width="640" height="480"/>
+
+  <div ng-if="c.data.result=='win'" class="win-image">
+    <img src="x_110515_hangman.hm_confetti.gif" width="100%" height="100%"/>
+
+  </div>
+  <div ng-if="c.data.result=='lose'" class="lose-image">
+    <div class="death-background"> 
+      <p>You Died</p>
+    </div>
+  </div>
+    <div ng-if="!c.data.result">
+      <div class="key">
+        <div class="row">
+          <span class="char" ng-repeat="row1char in c.data.row1chars">
+            <button type="button" class="btn btn-sm btn-primary charbutton"  ng-if="!row1char.used" data-key="{{row1char.char}}" ng-click="c.quessChar(row1char.char)">{{row1char.char}}</button>
+            <button type="button" class="btn btn-sm btn-primary charbutton"  ng-if="row1char.used" data-key="{{row1char.char}}" disabled>{{row1char.char}}</button>
+          </span>
+
+        </div>
+        <div class="row">
+          <span class="char" ng-repeat="row1char in c.data.row2chars">
+            <button type="button" class="btn btn-sm btn-primary charbutton"  ng-if="!row1char.used" data-key="{{row1char.char}}" ng-click="c.quessChar(row1char.char)">{{row1char.char}}</button>
+            <button type="button" class="btn btn-sm btn-primary charbutton"  ng-if="row1char.used" data-key="{{row1char.char}}" disabled>{{row1char.char}}</button>
+          </span>
+        </div>
+        <div class="row">
+          <span class="char" ng-repeat="row1char in c.data.row3chars">
+            <button type="button" class="btn btn-sm btn-primary charbutton"  ng-if="!row1char.used" data-key="{{row1char.char}}" ng-click="c.quessChar(row1char.char)">{{row1char.char}}</button>
+            <button type="button" class="btn btn-sm btn-primary charbutton"  ng-if="row1char.used" data-key="{{row1char.char}}" disabled>{{row1char.char}}</button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="newgame" ng-if="c.data.result">
+      <button type="button" class="btn btn-lg btn-primary"  ng-if="!row1char.used" ng-click="c.newGame()">New Game</button>
+    </div>
+
+  </div>
+
+
+]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="2812a2a02f079990e36ffe1df699b64d" label="Game" max_length="40" name="x_110515_hangman_game" type="collection">
+        <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element default="0" label="Failed attempts" max_length="40" name="failed_attempts" type="integer"/>
+        <element default="0" label="Letters Matched" max_length="40" name="letters_matched" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="encode_utf8=false" label="Player" max_length="32" name="player" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Result" max_length="40" name="result" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Lose" value="lose"/>
+                <element inactive_on_update="false" label="Win" value="win"/>
+            </choice>
+        </element>
+        <element default="[]" label="Used Characters" max_length="255" name="used_characters" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Word" max_length="40" name="word" type="string"/>
+        <index name="index">
+            <element name="player"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_page_registry">
+    <sys_ux_page_registry action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <admin_panel>520432a02f879990e36ffe1df699b6ca</admin_panel>
+        <admin_panel_table>sys_ux_app_config</admin_panel_table>
+        <auth_routes/>
+        <page/>
+        <parent_app/>
+        <path>hangman</path>
+        <root_macroponent display_value="Portal App Shell">b66bf1075b31101016fd7c1bf481c7a7</root_macroponent>
+        <sys_class_name>sys_ux_page_registry</sys_class_name>
+        <sys_created_by>lauri.alakulppi</sys_created_by>
+        <sys_created_on>2022-11-05 21:26:08</sys_created_on>
+        <sys_id>de0432a02f879990e36ffe1df699b6cc</sys_id>
+        <sys_name>Hangman</sys_name>
+        <sys_package display_value="Hangman" source="x_110515_hangman">e611a6202f079990e36ffe1df699b6ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Hangman">e611a6202f079990e36ffe1df699b6ee</sys_scope>
+        <sys_update_name>sys_ux_page_registry_de0432a02f879990e36ffe1df699b6cc</sys_update_name>
+        <title>Hangman</title>
+    </sys_ux_page_registry>
+</record_update>

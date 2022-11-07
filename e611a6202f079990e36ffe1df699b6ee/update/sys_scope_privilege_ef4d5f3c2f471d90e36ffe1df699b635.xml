@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_scope_privilege">
+    <sys_scope_privilege action="INSERT_OR_UPDATE">
+        <operation>execute</operation>
+        <source_scope display_value="Hangman">e611a6202f079990e36ffe1df699b6ee</source_scope>
+        <status>allowed</status>
+        <sys_class_name>sys_scope_privilege</sys_class_name>
+        <sys_created_by>ella</sys_created_by>
+        <sys_created_on>2022-11-06 19:04:56</sys_created_on>
+        <sys_id>ef4d5f3c2f471d90e36ffe1df699b635</sys_id>
+        <sys_name>SysList</sys_name>
+        <sys_package display_value="Hangman" source="x_110515_hangman">e611a6202f079990e36ffe1df699b6ee</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Hangman">e611a6202f079990e36ffe1df699b6ee</sys_scope>
+        <sys_update_name>sys_scope_privilege_ef4d5f3c2f471d90e36ffe1df699b635</sys_update_name>
+        <target_name>SysList</target_name>
+        <target_scope display_value="Global">global</target_scope>
+        <target_type>sys_script_include</target_type>
+    </sys_scope_privilege>
+</record_update>

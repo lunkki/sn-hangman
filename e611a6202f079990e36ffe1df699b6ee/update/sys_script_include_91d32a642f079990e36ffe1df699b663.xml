@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_110515_hangman.HangmanUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>let u = new HangmanUtils();&#13;
+const words = u.getAvailableWords("language=en^name=task^ORname=incident^ORname=sc_req_item");&#13;
+const randomWord = u.getRandomWord(words);&#13;
+gs.info(randomWord);&#13;
+&#13;
+let u = new HangmanUtils();&#13;
+const words = u.getAvailableWords2("name=asmt_condition");&#13;
+gs.info(words);&#13;
+&#13;
+let u = new HangmanUtils();&#13;
+u.newGame();&#13;
+&#13;
+&#13;
+&#13;
+let u = new HangmanUtils();&#13;
+const answer = u.guessLetter('faf966202f479990e36ffe1df699b6ac','a');&#13;
+gs.info(answer);&#13;
+&#13;
+&#13;
+var current = new GlideRecord('x_110515_hangman_game');&#13;
+current.get('faf966202f479990e36ffe1df699b6ac');&#13;
+let u = new HangmanUtils();&#13;
+const answer = u.checkForWin(current);&#13;
+gs.info(answer);</description>
+        <name>HangmanUtils</name>
+        <script><![CDATA[var HangmanUtils = Class.create();
+HangmanUtils.prototype = {
+	initialize: function() {
+		this.TABLE = 'x_110515_hangman_game';
+	},
+	getAvailableWords2:function(additional_query) {
+		let query = "language=en";
+		if(additional_query) {
+			query += "^"+additional_query;
+		}
+		let labelList = [];
+		let gr = new GlideRecord('sys_documentation');
+		gr.addEncodedQuery(query);
+		gr.query();
+		while (gr.next()) {
+			const label = gr.getValue('label');
+			if(!this.containsSpecialChars(label)) {
+				labelList.push(label);
+			}
+			
+		}
+		labelList = [...new Set(labelList)]; // get unqiue
+		return labelList;
+
+	},
+
+	getAvailableWords:function(additional_query) {
+			let query = "language=en";
+		if(additional_query) {
+			query += "^"+additional_query;
+		}
+		let labelList = [];
+		let gr = new GlideRecord('sys_documentation');
+		gr.addEncodedQuery(query);
+		gr.query();
+		while (gr.next()) {
+			const label = gr.getValue('label');
+			if(!this.containsSpecialChars(label)) {
+				labelList.push(label);
+			}
+			
+		}
+		labelList = [...new Set(labelList)]; // get unqiue
+		return labelList;
+
+	},
+
+	getRandomWord:function(array) {
+		return array[Math.floor(Math.random() * array.length)];
+	},
+
+	checkForWin:function(gr) {
+		let answer = false;
+		let word = gr.getValue('word');
+		word = word.replace(/\s/g, '');
+		const matched = parseInt(gr.getValue('letters_matched'));
+		if(word.length == matched){
+			answer = true;
+		}
+
+
+
+		return answer;
+	},
+
+	newGame:function() {
+		const words = this.getAvailableWords(gs.getProperty('x_110515_hangman.default.dictionary.query'));
+		const randomWord = this.getRandomWord(words);
+		let gr = new GlideRecord(this.TABLE);
+		gr.initialize();
+		gr.word = randomWord;
+		gr.player = gs.getUserID();
+		const gameID = gr.insert();
+		return gameID;
+	},
+
+	guessLetter:function(gameID,letter) {
+		let gr = new GlideRecord(this.TABLE);
+		gr.get(gameID);
+		const word = gr.getValue('word').toLowerCase();
+		let usedCharacters = JSON.parse(gr.getValue('used_characters'));
+		if(usedCharacters.indexOf(letter) > -1 ) { return; }  // if too fast
+		let answer = false;
+		if(word.indexOf(letter) > -1) {
+			answer = true;
+			const matchedTimes = this._getAllIndexes(word,letter).length; // how many times matched (eg. created after , letter a : matched 2 times)
+			let currentMatchedTimes = parseInt(gr.getValue('letters_matched'));
+			gr.setValue('letters_matched',currentMatchedTimes + matchedTimes);
+		} else {
+			let failedAttempts = parseInt(gr.getValue('failed_attempts'));
+			failedAttempts = failedAttempts+1;
+			gr.setValue('failed_attempts',failedAttempts);
+		}
+
+		if(usedCharacters) {
+			usedCharacters.push(letter);
+		} else {
+			usedCharacters = [];
+			usedCharacters.push(letter);
+		}
+		gr.setValue('used_characters',JSON.stringify(usedCharacters));
+		gr.update();
+		return answer;
+	},
+
+	_getAllIndexes: function (arr, val) {
+		var indexes = [], i = -1;
+		while ((i = arr.indexOf(val, i+1)) != -1){
+			indexes.push(i);
+		}
+		return indexes;
+	},
+
+	/*
+	let u = new HangmanUtils();
+	const answer = u.getWordTemplate('faf966202f479990e36ffe1df699b6ac');
+	gs.info(answer);
+
+	*/
+	getWordTemplate:function(gameID) {
+		let gr = new GlideRecord(this.TABLE);
+		gr.get(gameID);
+		const word = gr.getValue('word');
+		let usedCharacters = gr.getValue('used_characters');
+		if(!usedCharacters) {
+			usedCharacters = "[]";
+		} 
+		usedCharacters = JSON.parse(usedCharacters);
+		let wordTemplate = ""
+		for (var i = 0; i < word.length; i++) {
+			let character = word[i];
+			let lowCharacter = word[i].toLowerCase();
+			if(character == ' ') {
+				wordTemplate += ' ';
+				continue;
+			}
+			if(usedCharacters.indexOf(lowCharacter) >-1) {
+				wordTemplate += character;
+				continue;
+			} 
+
+			//default
+			wordTemplate += "_"
+
+		}
+		return wordTemplate;
+
+
+	},
+
+	getImageSource:function(gameID) {
+		let gr = new GlideRecord(this.TABLE);
+		gr.get(gameID);
+		const failed_attempts = gr.getValue('failed_attempts');
+
+		return `x_110515_hangman.hm_${failed_attempts}.png`
+	},
+
+	containsSpecialChars:function(str) {
+		const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~0-9]/;
+		return specialChars.test(str);
+	},
+
+
+
+
+	type: 'HangmanUtils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>lauri.alakulppi</sys_created_by>
+        <sys_created_on>2022-11-05 20:18:49</sys_created_on>
+        <sys_id>91d32a642f079990e36ffe1df699b663</sys_id>
+        <sys_name>HangmanUtils</sys_name>
+        <sys_package display_value="Hangman" source="x_110515_hangman">e611a6202f079990e36ffe1df699b6ee</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Hangman">e611a6202f079990e36ffe1df699b6ee</sys_scope>
+        <sys_update_name>sys_script_include_91d32a642f079990e36ffe1df699b663</sys_update_name>
+    </sys_script_include>
+</record_update>
